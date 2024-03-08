@@ -1,22 +1,6 @@
 //Learning object oriented programming by building a shopping cart.
 //OOP, or Object Oriented Programming, is one of the major approaches to the software development process. In OOP, developers use objects and classes to structure their code.
 
-//In JavaScript, a class is like a blueprint for creating objects. It allows you to define a set of properties and methods, and instantiate (or create) new objects with those properties and methods.
-//Classes have a special constructor method, which is called when a new instance of the class is created. The constructor method is a great place to initialize properties of the class
-//The this keyword in JavaScript is used to refer to the current object. Depending on where this is used, what it references changes. In the case of a class, it refers to the instance of the object being constructed. You can use the this keyword to set the properties of the object being instantiated
-
-//You need to find the product that the user is adding to the cart. Remember that arrays have a .find() method.
-
-//The behaviour of the addItem method needs to change if the product is already in the cart or not. Create a ternary that checks if the current product is already in the cart. Use undefined for both the truthy and falsy expressions to avoid a syntax error.
-
-//Because of the way computers store and work with numbers, calculations involving decimal numbers can result in some strange behavior. For example, 0.1 + 0.2 is not equal to 0.3. This is because computers store decimal numbers as binary fractions, and some binary fractions cannot be represented exactly as decimal fractions.
-
-//The issue with .toFixed() returning a string is that you want to be able to perform calculations with the tax rate. To fix this, you can pass the .toFixed() call (including the calculation) to the parseFloat() function. This will convert the fixed string back into a number, preserving the existing decimal places.
-
-//Browsers have a built-in confirm() function which displays a confirmation prompt to the user. confirm() accepts a string, which is the message displayed to the user. It returns true if the user confirms, and false if the user cancels.
-
-//You only want to clear the cart if the user confirms the prompt. Create an if statement that checks if the user confirmed the prompt.
-
 const cartContainer = document.getElementById("cart-container");
 const productsContainer = document.getElementById("products-container");
 const dessertCards = document.getElementById("dessert-card-container");
@@ -120,6 +104,9 @@ products.forEach(
   }
 );
 
+//In JavaScript, a class is like a blueprint for creating objects. It allows you to define a set of properties and methods, and instantiate (or create) new objects with those properties and methods.
+//Classes have a special constructor method, which is called when a new instance of the class is created. The constructor method is a great place to initialize properties of the class
+//The this keyword in JavaScript is used to refer to the current object. Depending on where this is used, what it references changes. In the case of a class, it refers to the instance of the object being constructed. You can use the this keyword to set the properties of the object being instantiated
 class ShoppingCart {
   constructor() {
     this.items = [];
@@ -127,6 +114,7 @@ class ShoppingCart {
     this.taxRate = 8.25;
   }
 
+  //You need to find the product that the user is adding to the cart. Remember that arrays have a .find() method.
   addItem(id, products) {
     const product = products.find((item) => item.id === id);
     const { name, price } = product;
@@ -140,6 +128,7 @@ class ShoppingCart {
     const currentProductCount = totalCountPerProduct[product.id];
     const currentProductCountSpan = document.getElementById(`product-count-for-id${id}`);
 
+    //The behaviour of the addItem method needs to change if the product is already in the cart or not. Create a ternary that checks if the current product is already in the cart. Use undefined for both the truthy and falsy expressions to avoid a syntax error.
     currentProductCount > 1 
       ? currentProductCountSpan.textContent = `${currentProductCount}x`
       : productsContainer.innerHTML += `
@@ -156,12 +145,14 @@ class ShoppingCart {
     return this.items.length;
   }
 
+  //You only want to clear the cart if the user confirms the prompt. Create an if statement that checks if the user confirmed the prompt.
   clearCart() {
     if (!this.items.length) {
       alert("Your shopping cart is already empty");
       return;
     }
 
+    //Browsers have a built-in confirm() function which displays a confirmation prompt to the user. confirm() accepts a string, which is the message displayed to the user. It returns true if the user confirms, and false if the user cancels.
     const isCartCleared = confirm(
       "Are you sure you want to clear all items from your shopping cart?"
     );
@@ -176,6 +167,9 @@ class ShoppingCart {
       cartTotal.textContent = 0;
     }
   }
+
+  //Because of the way computers store and work with numbers, calculations involving decimal numbers can result in some strange behavior. For example, 0.1 + 0.2 is not equal to 0.3. This is because computers store decimal numbers as binary fractions, and some binary fractions cannot be represented exactly as decimal fractions.
+  //The issue with .toFixed() returning a string is that you want to be able to perform calculations with the tax rate. To fix this, you can pass the .toFixed() call (including the calculation) to the parseFloat() function. This will convert the fixed string back into a number, preserving the existing decimal places.
 
   calculateTaxes(amount) {
     return parseFloat(((this.taxRate / 100) * amount).toFixed(2));
